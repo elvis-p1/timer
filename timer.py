@@ -1,9 +1,12 @@
 from tkinter import *
 import timeit
-from pydub import AudioSegment
-from pydub.playback import play
+from pygame import mixer
 
-sound = AudioSegment.from_file(file="NaM.wav", format="wav")
+mixer.init()
+
+def playsound():
+    mixer.music.load("NaM.wav")
+    mixer.music.play(2)
 
 def HhMmSs_format(seconds):
     remaining = seconds
@@ -59,10 +62,11 @@ class Timer:
             self.current_seconds = 0.0
             self.timer_label.configure(text=HhMmSs_format(self.current_seconds))
         
+        # if time has run out
         if HhMmSs_format(self.current_seconds) == "00:00:00.00":
             self.current_seconds = 0.0
             self.timer_label.configure(text=HhMmSs_format(self.current_seconds))
-            play(sound)
+            playsound()
 
     # Adds entry boxes for users to put amount of hours,minutes, and seconds into the timer
     def timer_entries(self):
